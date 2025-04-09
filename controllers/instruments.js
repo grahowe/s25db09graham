@@ -8,8 +8,22 @@ exports.instrument_detail = function(req, res) {
 	res.send('NOT IMPLEMENTED: Instrument detail: ' + req.params.id);
 };
 
-exports.instrument_create_post = function(req, res) {
-	res.send('NOT IMPLEMENTED: Instrument create POST');
+exports.instrument_create_post = async function(req, res) {
+	console.log(req.body);
+	let document = new Instrument();
+
+	document.name = req.body.name;
+	document.type = req.body.type;
+	document.year = req.body.year;
+
+	try {
+		let result = await document.save();
+		res.send(result);
+	}
+	catch(err) {
+		res.status(500);
+		res.send(`{"error": ${err}}`);
+	}
 };
 
 exports.instrument_delete = function(req,res) {
