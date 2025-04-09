@@ -30,3 +30,14 @@ exports.instrument_list = async function(req, res) {
 		res.send(`{"error": ${err}}`);
 	}
 };
+
+exports.instrument_view_all_Page = async function(req, res) {
+	try {
+		theInstruments = await Instrument.find();
+		res.render('instruments', {title: 'Instrument Search Results', results: theInstruments});
+	}
+	catch(err) {
+		res.status(500);
+		res.send(`{"error": ${err}}`);
+	}
+};

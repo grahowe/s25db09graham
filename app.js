@@ -10,6 +10,7 @@ var usersRouter = require('./routes/users');
 var computationRouter = require('./routes/computation');
 var Instrument = require('./models/instruments');
 var resource = require('./routes/resource');
+var instrumentRouter = require('./routes/instruments');
 
 var app = express();
 
@@ -28,6 +29,7 @@ app.use('/mydata', mydataRouter);
 app.use('/users', usersRouter);
 app.use('/computation', computationRouter);
 app.use('/resource', resource);
+app.use('/instruments', instrumentRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

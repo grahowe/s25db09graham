@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  h1= title
+  ul
+    each instrument in results
+      li
+        | Name: #{instrument.name}, Family: #{instrument.type}, Year: #{instrument.year}
+
