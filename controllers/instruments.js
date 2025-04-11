@@ -4,8 +4,16 @@ exports.instrument_list = function(req, res) {
 	res.send('NOT IMPLEMENTED: Instrument list');
 };
 
-exports.instrument_detail = function(req, res) {
-	res.send('NOT IMPLEMENTED: Instrument detail: ' + req.params.id);
+exports.instrument_detail = async function(req, res) {
+	console.log("detail" + req.params.id)
+	try {
+		result = await Instrument.findById(req.params.id);
+		res.send(result);
+	}
+	catch(err) {
+		res.status(500);
+		res.send(`{"error": document for id ${req.params.id} not found`);
+	}
 };
 
 exports.instrument_create_post = async function(req, res) {
