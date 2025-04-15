@@ -111,3 +111,27 @@ exports.instrument_create_Page = function(req, res) {
 		res.send(`{'error': '${err}'}`);
 	}
 };
+
+exports.instrument_update_Page = async function(req, res) {
+	console.log("update view for item " + req.query.id);
+	try {
+		let result = await Instrument.findById(req.query.id);
+		res.render('instrumentupdate', {title: 'Instrument Update', toShow: result});
+	}
+	catch(err) {
+		res.status(500);
+		res.send(`{'error': '${err}'}`);
+	}
+};
+
+exports.instrument_delete_Page = async function(req, res) {
+	console.log("Delete view for id " + req.query.id)
+	try {
+		result = await Instrument.findById(req.query.id)
+		res.render('instrumentdelete', {title: 'Instrument Delete', toShow: result});
+	}
+	catch(err) {
+		res.status(500);
+		res.send(`{'error': '${err}'}`);
+	}
+};

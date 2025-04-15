@@ -1,0 +1,52 @@
+extends layout
+
+block content
+  h1= title
+
+  if (toShow == null)
+    h2 No instance to delete
+
+  else
+    - let instrumentid = toShow._id
+    - let instrument_name = toShow.name
+    - let instrument_type = toShow.type
+    - let instrument_year = toShow.year
+    - let actionid = "/resource/instruments/" + instrumentid
+
+    script let actionid = "#{actionid}"
+    div
+      div.row
+        div(class='instrumentAttr mr-3') Instrument ID is:
+        div #{instrumentid}
+      div.row
+        div(class='instrumentAttr mr-3') Instrument Name is:
+        div #{instrument_name}
+      div.row
+        div(class='instrumentAttr mr-3') Instrument Type is:
+        div #{instrument_type}
+      div.row
+        div(class='instrumentAttr mr-3') Year Introduced is:
+        div #{instrument_year}
+
+    button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+
+  script.
+    function cancel() {
+      window.location.href='/instruments'
+    }
+
+  script.
+    function deleteOnid() {
+      console.log("Starting delete...")
+      fetch(actionid, {
+        method: 'DELETE'
+      }).then((resp) => {
+        return resp.json();
+      }).then((body) => {
+        alert("Delete successful")
+        window.location.href='/instruments'
+      }).catch((error) => {
+        alert("Delete failed" + error)
+      });
+    }

@@ -3,21 +3,26 @@ extends layout
 block content
   h1= title
 
-  if toShow && toShow._id
-    p
-      strong ID:
-      | #{toShow._id}
+  - let instrumentid = toShow._id
+  - let instrument_name = toShow.name
+  - let instrument_type = toShow.type
+  - let instrument_year = toShow.year
 
-  form(id='InstrumentForm', action=`/resource/instruments/${toShow._id}?_method=PUT`, method="POST")
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{instrumentid}
+  - let actionid = "/resource/instruments/" + instrumentid
+
+  form(id='InstrumentForm', action=actionid, method="PUT")
     div.form-group
       label.instrumentAttr(for='instrument_name') Instrument name
-      input#instrument_name(type='text', name='instrument_name', value=toShow.name)
+      input#instrument_name(type='text', name='instrument_name', value=instrument_name)
     div.form-group
       label.instrumentAttr(for='instrument_type') Instrument type
-      input#instrument_type(type='text', name='instrument_type', value=toShow.type)
+      input#instrument_type(type='text', name='instrument_type', value=instrument_type)
     div.form-group
       label.instrumentAttr(for='instrument_year') Instrument year
-      input#instrument_year(type='number', name='instrument_year', value=toShow.year)
+      input#instrument_year(type='number', name='instrument_year', value=instrument_year)
     input(type="submit")
 
   script.
@@ -25,7 +30,7 @@ block content
       event.preventDefault();
 
       fetch(event.target.action, {
-        method: 'POST',
+        method: 'PUT',
         body: new URLSearchParams(new FormData(event.target))
       }).then((resp) => {
         return resp.json();

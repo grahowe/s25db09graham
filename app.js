@@ -63,8 +63,12 @@ async function recreateDB(){
 	await Instrument.deleteMany();
 	
 	let instance1 = new Instrument({name:"Flute", type:"Woodwind", year:43000});
+	let instance2 = new Instrument({name:"Guitar", type:"Strings", year:1500});
+	let instance3 = new Instrument({name:"Clarinet", type:"Woodwind", year: 1580});
 
 	instance1.save() .then(doc=>{console.log("First object saved")}).catch(err=>{console.error(errP)});
+	instance2.save() .then(doc=>{console.log("Second object saved")}).catch(err=>{console.error(errP)});
+	instance3.save() .then(doc=>{console.log("Third object saved")}).catch(err=>{console.error(errP)});
 }
 
 let reseed = true;
