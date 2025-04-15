@@ -34,8 +34,17 @@ exports.instrument_create_post = async function(req, res) {
 	}
 };
 
-exports.instrument_delete = function(req,res) {
-	res.send('NOT IMPLEMENTED: Costume delete DELETE ' + req.params.id);
+exports.instrument_delete = async function(req,res) {
+	console.log("delete" + req.params.id);
+	try {
+		result = await Instrument.findByIdAndDelete(req.params.id);
+		console.log("Removed " + result);
+		res.send(result);
+	}
+	catch(err) {
+		res.status(500);
+		res.send(`{"error": Error deleting ${err}}`);
+	}
 };
 
 exports.instrument_update_put = async function(req, res) {
@@ -77,5 +86,28 @@ exports.instrument_view_all_Page = async function(req, res) {
 	catch(err) {
 		res.status(500);
 		res.send(`{"error": ${err}}`);
+	}
+};
+
+exports.instrument_view_one_Page = async function(req, res) {
+	console.log("Single view for id " + req.query.id);
+	try {
+		result = await Instrument.findById(req.query.id);
+		res.render('instrumentdetail', {title: 'Instrument Detail', toShow: result});
+	}
+	catch(err) {
+		res.status(500);
+		res.send(`{"error":'${err}'}`);
+	}
+};
+
+exports.instrument_create_Page = function(req, res) {
+	console.log("create view");
+	try {
+		res.render('instrumentcreate', {title: 'Instrument Create'});
+	}
+	catch(err) {
+		res.status(500);
+		res.send(`{'error': '${err}'}`);
 	}
 };

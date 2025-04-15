@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  h1= title
+
+  - let instrumentid = toShow._id
+  - let instrument_name = toShow.name
+  - let instrument_type = toShow.type
+  - let instrument_year = toShow.year
+
+  div
+    div.row
+      div(class='instrumentAttr mr-3') Instrument ID is:
+      div #{instrumentid}
+    div.row
+      div(class='instrumentAttr mr-3') Instrument Name is:
+      div #{instrument_name}
+    div.row
+      div(class='instrumentAttr mr-3') Instrument Family is:
+      div #{instrument_type}
+    div.row
+      div(class='instrumentAttr mr-3') Year Introduced:
+      div #{instrument_year}
+
