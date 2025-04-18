@@ -1,9 +1,5 @@
 var Instrument = require('../models/instruments');
 
-exports.instrument_list = function(req, res) {
-	res.send('NOT IMPLEMENTED: Instrument list');
-};
-
 exports.instrument_detail = async function(req, res) {
 	console.log("detail" + req.params.id)
 	try {

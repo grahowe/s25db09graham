@@ -2,8 +2,16 @@ extends layout
 
 block content
   h1= title
-  ul
-    each instrument in results
-      li
-        | Name: #{instrument.name}, Family: #{instrument.type}, Year: #{instrument.year}
+  - let items = results;
 
+  div(class="container-fluid")
+    div(class="row m-1")
+      each item in items
+       - let destination = `dispatch(\"/instruments/update?id=${item._id}\")`
+        div(class="row-sm2", class="m-1") Item #{item.name} of type (#{item.type}) is from #{item.year}
+        button.btn(class="btn-primary ml-1", onclick=destination) Update
+
+  script.
+    function dispatch(path){
+      window.location.href=path
+    }
