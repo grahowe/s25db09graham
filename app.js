@@ -106,7 +106,7 @@ db.once("open", function(){console.log("Connection to DB succeeded")});
 async function recreateDB(){
 	await Instrument.deleteMany();
 	
-	let instance1 = new Instrument({name:"Flute", type:"Woodwind", year:43000});
+	let instance1 = new Instrument({name:"Flute", type:"Woodwind", year:1000});
 	let instance2 = new Instrument({name:"Guitar", type:"Strings", year:1500});
 	let instance3 = new Instrument({name:"Clarinet", type:"Woodwind", year: 1580});
 

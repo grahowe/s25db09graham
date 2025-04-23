@@ -42,7 +42,7 @@ block content
       fetch(actionid, {
         method: 'DELETE'
       }).then((resp) => {
-        return resp.json();
+        return resp.text();
       }).then((body) => {
         alert("Delete successful")
         window.location.href='/instruments'

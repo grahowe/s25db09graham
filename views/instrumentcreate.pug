@@ -3,21 +3,23 @@ extends layout
 block content
   h1= title
 
-  if toShow && toShow._id
+  - var isUpdate = typeof toShow !== 'undefined' && toShow._id;
+
+  if isUpdate
     p
       strong ID:
       | #{toShow._id}
 
-  form(id='InstrumentForm', action=`/resource/instruments/${toShow._id}?_method=PUT`, method="POST")
+  form(id='InstrumentForm', action=(isUpdate ? `/resource/instruments/${toShow._id}?_method=PUT` : '/instrument/create'), method="POST")
     div.form-group
       label.instrumentAttr(for='instrument_name') Instrument name
-      input#instrument_name(type='text', name='instrument_name', value=toShow.name)
+      input#instrument_name(type='text', name='instrument_name', value=(toShow && toShow.name) ? toShow.name : '')
     div.form-group
       label.instrumentAttr(for='instrument_type') Instrument type
-      input#instrument_type(type='text', name='instrument_type', value=toShow.type)
+      input#instrument_type(type='text', name='instrument_type', value=(toShow && toShow.type) ? toShow.type : '')
     div.form-group
       label.instrumentAttr(for='instrument_year') Instrument year
-      input#instrument_year(type='number', name='instrument_year', value=toShow.year)
+      input#instrument_year(type='number', name='instrument_year', value=(toShow && toShow.year) ? toShow.year : '')
     input(type="submit")
 
   script.
@@ -28,10 +30,11 @@ block content
         method: 'POST',
         body: new URLSearchParams(new FormData(event.target))
       }).then((resp) => {
-        return resp.json();
+        return resp.text();
       }).then((body) => {
-        alert("Save succeeded")
+        alert("Save succeeded");
+        window.location.href = '/instruments';
       }).catch((error) => {
-        alert("Save failed" + error)
+        alert("Save failed: " + error);
       });
     });

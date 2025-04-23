@@ -1,34 +1,45 @@
 var Instrument = require('../models/instruments');
 
 exports.instrument_detail = async function(req, res) {
-	console.log("detail" + req.params.id)
-	try {
-		result = await Instrument.findById(req.params.id);
-		res.send(result);
-	}
-	catch(err) {
-		res.status(500);
-		res.send(`{"error": document for id ${req.params.id} not found`);
-	}
+    const id = req.params.id;  // Use `req.params.id` to get the ID from the URL path
+    
+    console.log("Fetching instrument details for ID:", id);
+
+    try {
+        const instrument = await Instrument.findById(id);
+        if (instrument) {
+            res.render('instrument/detail', { title: 'Instrument Detail', instrument: instrument });
+        } else {
+            res.status(404).send('Instrument not found');
+        }
+    } catch (err) {
+        console.log(err);
+        res.status(500).send('Error retrieving instrument');
+    }
 };
 
 exports.instrument_create_post = async function(req, res) {
-	console.log(req.body);
-	let document = new Instrument();
+    console.log(req.body);
+    let document = new Instrument();
 
-	document.name = req.body.name;
-	document.type = req.body.type;
-	document.year = req.body.year;
+    document.name = req.body.name;
+    document.type = req.body.type;
+    document.year = Number(req.body.year);
 
-	try {
-		let result = await document.save();
-		res.send(result);
-	}
-	catch(err) {
-		res.status(500);
-		res.send(`{"error": ${err}}`);
-	}
+    try {
+        let result = await document.save();
+        console.log("Created instrument with ID:", result._id); // Log the instrument ID to ensure it's correct
+        
+        // Redirect using the correct path and instrument ID
+        res.redirect(`/resource/instruments/detail/${result._id}`); // Use path instead of query parameter
+    }
+    catch(err) {
+        res.status(500);
+        res.send(`{"error": ${err}}`);
+    }
 };
+
+
 
 exports.instrument_delete = async function(req,res) {
 	console.log("delete" + req.params.id);
